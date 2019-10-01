@@ -15,7 +15,7 @@ public class StateJugs
     }
     
     public boolean equals(Object o) {
-        StateJugs state = (StateJugs) obj;
+        StateJugs state = (StateJugs) o;
         
         for (int i=0; i<this.jugsArray.length; i++) {
             if (this.jugsArray[i] != state.jugsArray[i])
@@ -26,7 +26,8 @@ public class StateJugs
     
     public int hashCode() {
         return jugsArray[0]*1000 + jugsArray[1]*100 + jugsArray[2]*10 + jugsArray[3];
-    
+    }
+
     public String toString() {
     	String ret = "";
         for (int i=0; i<jugsArray.length; i++)
