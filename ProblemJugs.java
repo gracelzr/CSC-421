@@ -1,5 +1,11 @@
 import java.util.HashSet;
 import java.util.Set;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.util.Scanner;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 
 public class ProblemJugs extends Problem {
     
@@ -34,6 +40,7 @@ public class ProblemJugs extends Problem {
         Set<Object> set = new HashSet<Object>();
         StateJugs s = (StateJugs) state;      
         StateJugs ss; //successor state
+        int waterIn12, waterIn8, waterIn3, roomIn12, roomIn8, roomIn3 = 0;
 
         // Fill 12
         ss = new StateJugs(s);
@@ -53,53 +60,155 @@ public class ProblemJugs extends Problem {
         }
 
         // Fill 3
-
+        ss = new StateJugs(s);
+        if(ss.jugsArray[jug3] < 3) {
+            ss.jugsArray[jug3] += 3 - ss.jugsArray[jug3];
+            if(isValid(ss))
+                set.add(ss);
+        }
 
         // Pour 12 to 8
-
+        ss = new StateJugs(s);
+        waterIn12 = ss.jugsArray[jug12];
+        roomIn8 = 8 - ss.jugsArray[jug8];
+        // if Jug 12 has water and Jug 8 has room, then pour
+        if(waterIn12 > 0 && roomIn8 > 0){
+            if(waterIn12 > roomIn8){
+                ss.jugsArray[jug12] -= roomIn8;
+                ss.jugsArray[jug8] += roomIn8;
+            }else{
+                ss.jugsArray[jug12] -= waterIn12;
+                ss.jugsArray[jug8] += waterIn12;
+            }
+            if(isValid(ss))
+                set.add(ss);
+        }
 
         // Pour 8 to 12
-
-
+        ss = new StateJugs(s);
+        waterIn8 = ss.jugsArray[jug8];
+        roomIn12 = 12 - ss.jugsArray[jug12];
+        if(waterIn8 > 0 && roomIn12 > 0){
+            if(waterIn8 > roomIn12){
+                ss.jugsArray[jug8] -= roomIn12;
+                ss.jugsArray[jug12] += roomIn12;
+            }else{
+                ss.jugsArray[jug8] -= waterIn8;
+                ss.jugsArray[jug12] += waterIn8;
+            }
+            if(isValid(ss))
+                set.add(ss);
+        }
 
         // Pour 12 to 3
-
+        ss = new StateJugs(s);
+        waterIn12 = ss.jugsArray[jug12];
+        roomIn3 = 3 - ss.jugsArray[jug3];
+        // if Jug 12 has water and Jug 3 has room, then pour
+        if(waterIn12 > 0 && roomIn3 > 0){
+            if(waterIn12 > roomIn3){
+                ss.jugsArray[jug12] -= roomIn3;
+                ss.jugsArray[jug3] += roomIn3;
+            }else{
+                ss.jugsArray[jug12] -= waterIn12;
+                ss.jugsArray[jug3] += waterIn12;
+            }
+            if(isValid(ss))
+                set.add(ss);
+        }
 
         // Pour 3 to 12
-
+        ss = new StateJugs(s);
+        waterIn3 = ss.jugsArray[jug3];
+        roomIn12 = 12 - ss.jugsArray[jug12];
+        if(waterIn3 > 0 && roomIn12 > 0){
+            if(waterIn3 > roomIn12){
+                ss.jugsArray[jug3] -= roomIn12;
+                ss.jugsArray[jug12] += roomIn12;
+            }else{
+                ss.jugsArray[jug3] -= waterIn3;
+                ss.jugsArray[jug12] += waterIn3;
+            }
+            if(isValid(ss))
+                set.add(ss);
+        }
 
 
         // Pour 8 to 3
-
+        ss = new StateJugs(s);
+        waterIn8 = ss.jugsArray[jug8];
+        roomIn3 = 3 - ss.jugsArray[jug3];
+        if(waterIn8 > 0 && roomIn3 > 0){
+            if(waterIn8 > roomIn3){
+                ss.jugsArray[jug8] -= roomIn3;
+                ss.jugsArray[jug3] += roomIn3;
+            }else{
+                ss.jugsArray[jug8] -= waterIn8;
+                ss.jugsArray[jug3] += waterIn8;
+            }
+            if(isValid(ss))
+                set.add(ss);
+        }
 
         // Pour 3 to 8
-
+        ss = new StateJugs(s);
+        waterIn3 = ss.jugsArray[jug3];
+        roomIn8 = 8 - ss.jugsArray[jug8];
+        if(waterIn3 > 0 && roomIn8 > 0){
+            if(waterIn3 > roomIn8){
+                ss.jugsArray[jug3] -= roomIn8;
+                ss.jugsArray[jug8] += roomIn8;
+            }else{
+                ss.jugsArray[jug3] -= waterIn3;
+                ss.jugsArray[jug8] += waterIn3;
+            }
+            if(isValid(ss))
+                set.add(ss);
+        }
 
 
         // Empty 12
-
-
+        ss = new StateJugs(s);
+        if(ss.jugsArray[jug12] > 0) {
+            ss.jugsArray[ground] += ss.jugsArray[jug12];
+            ss.jugsArray[jug12] = 0;
+            if(isValid(ss))
+                set.add(ss);
+        }
 
         // Empty 8
-
+        ss = new StateJugs(s);
+        if(ss.jugsArray[jug8] > 0) {
+            ss.jugsArray[ground] += ss.jugsArray[jug8];
+            ss.jugsArray[jug8] = 0;
+            if(isValid(ss))
+                set.add(ss);
+        }
 
         // Empty 3
-
-
-        // ss = new StateJugs(s);
-        // if(j0>0) {
-        // 	ss.puzzleArray[i0][j0-1] = 0;
-        // 	ss.puzzleArray[i0][j0]   = s.puzzleArray[i0][j0-1];
-        // 	ss.j0--;
-        // 	//System.out.println(ss);
-        // 	set.add(ss);
-        // }
-
+        ss = new StateJugs(s);
+        if(ss.jugsArray[jug3] > 0) {
+            ss.jugsArray[ground] += ss.jugsArray[jug3];
+            ss.jugsArray[jug3] = 0;
+            if(isValid(ss))
+                set.add(ss);
+        }
         
         return set;
     }
 	
-	double step_cost(Object fromState, Object toState) { return 1; }
+	double step_cost(Object fromState, Object toState) {
+        int costs=0;
+        StateJugs prev = (StateJugs) fromState;
+        StateJugs next = (StateJugs) toState;
+
+        for(int i=0; i< prev.jugsArray.length; i++){
+            if(next.jugsArray[i] - prev.jugsArray[i] >0)
+                costs+=(next.jugsArray[i] - prev.jugsArray[i]);
+        }
+
+        return costs;
+    }
 
 	public double h(Object state) { return 0; }
 
@@ -111,23 +220,27 @@ public class ProblemJugs extends Problem {
 		
 		Search search  = new Search(problem);
 		
-		System.out.println("TreeSearch------------------------");
-		//System.out.println("BreadthFirstTreeSearch:\t\t" + search.BreadthFirstTreeSearch());
-		//System.out.println("UniformCostTreeSearch:\t\t" + search.UniformCostTreeSearch());
+        BufferedWriter writer = new BufferedWriter(new FileWriter("Output.txt"));
+
+		writer.write("TreeSearch------------------------");
+		writer.write("BreadthFirstTreeSearch:\t\t" + search.BreadthFirstTreeSearch());
+		writer.write("UniformCostTreeSearch:\t\t" + search.UniformCostTreeSearch());
 		//System.out.println("DepthFirstTreeSearch:\t\t" + search.DepthFirstTreeSearch());
 		//System.out.println("GreedyBestFirstTreeSearch:\t" + search.GreedyBestFirstTreeSearch());
-		//System.out.println("AstarTreeSearch:\t\t" + search.AstarTreeSearch());
+		writer.write("AstarTreeSearch:\t\t" + search.AstarTreeSearch());
 		
-		System.out.println("\n\nGraphSearch----------------------");
-		System.out.println("BreadthFirstGraphSearch:\t" + search.BreadthFirstGraphSearch());
-		System.out.println("UniformCostGraphSearch:\t\t" + search.UniformCostGraphSearch());
+		writer.write("\n\nGraphSearch----------------------");
+		writer.write("BreadthFirstGraphSearch:\t" + search.BreadthFirstGraphSearch());
+		writer.write("UniformCostGraphSearch:\t\t" + search.UniformCostGraphSearch());
 		//System.out.println("DepthFirstGraphSearch:\t\t" + search.DepthFirstGraphSearch());
 		//System.out.println("GreedyBestGraphSearch:\t\t" + search.GreedyBestFirstGraphSearch());
-		System.out.println("AstarGraphSearch:\t\t" + search.AstarGraphSearch());
+		writer.write("AstarGraphSearch:\t\t" + search.AstarGraphSearch());
 		
-		System.out.println("\n\nIterativeDeepening----------------------");
+		writer.write("\n\nIterativeDeepening----------------------");
 		//System.out.println("IterativeDeepeningTreeSearch:\t" + search.IterativeDeepeningTreeSearch());
-		System.out.println("IterativeDeepeningGraphSearch:\t" + search.IterativeDeepeningGraphSearch());
+		writer.write("IterativeDeepeningGraphSearch:\t" + search.IterativeDeepeningGraphSearch());
+         
+        writer.close();
 	}
 	
 }
