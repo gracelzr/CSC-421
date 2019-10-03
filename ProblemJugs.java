@@ -220,25 +220,25 @@ public class ProblemJugs extends Problem {
 		
 		Search search  = new Search(problem);
 		
-        BufferedWriter writer = new BufferedWriter(new FileWriter("Output.txt"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter("Q4_Output.txt"));
 
 		writer.write("TreeSearch------------------------");
-		writer.write("BreadthFirstTreeSearch:\t\t" + search.BreadthFirstTreeSearch());
-		writer.write("UniformCostTreeSearch:\t\t" + search.UniformCostTreeSearch());
-		//System.out.println("DepthFirstTreeSearch:\t\t" + search.DepthFirstTreeSearch());
-		//System.out.println("GreedyBestFirstTreeSearch:\t" + search.GreedyBestFirstTreeSearch());
-		writer.write("AstarTreeSearch:\t\t" + search.AstarTreeSearch());
+		writer.write("\nBreadthFirstTreeSearch:\t\t" + search.BreadthFirstTreeSearch());
+		writer.write("\nUniformCostTreeSearch:\t\t" + search.UniformCostTreeSearch());
+		writer.write("\nDepthFirstTreeSearch:\t\t" + search.DepthFirstTreeSearch());
+		writer.write("\nGreedyBestFirstTreeSearch:\t" + search.GreedyBestFirstTreeSearch());
+		writer.write("\nAstarTreeSearch:\t\t" + search.AstarTreeSearch());
 		
 		writer.write("\n\nGraphSearch----------------------");
-		writer.write("BreadthFirstGraphSearch:\t" + search.BreadthFirstGraphSearch());
-		writer.write("UniformCostGraphSearch:\t\t" + search.UniformCostGraphSearch());
-		//System.out.println("DepthFirstGraphSearch:\t\t" + search.DepthFirstGraphSearch());
-		//System.out.println("GreedyBestGraphSearch:\t\t" + search.GreedyBestFirstGraphSearch());
-		writer.write("AstarGraphSearch:\t\t" + search.AstarGraphSearch());
+		writer.write("\nBreadthFirstGraphSearch:\t" + search.BreadthFirstGraphSearch());
+		writer.write("\nUniformCostGraphSearch:\t\t" + search.UniformCostGraphSearch());
+		writer.write("\nDepthFirstGraphSearch:\t\t" + search.DepthFirstGraphSearch());
+		writer.write("\nGreedyBestGraphSearch:\t\t" + search.GreedyBestFirstGraphSearch());
+		writer.write("\nAstarGraphSearch:\t\t" + search.AstarGraphSearch());
 		
 		writer.write("\n\nIterativeDeepening----------------------");
-		//System.out.println("IterativeDeepeningTreeSearch:\t" + search.IterativeDeepeningTreeSearch());
-		writer.write("IterativeDeepeningGraphSearch:\t" + search.IterativeDeepeningGraphSearch());
+		writer.write("\nIterativeDeepeningTreeSearch:\t" + search.IterativeDeepeningTreeSearch());
+		writer.write("\nIterativeDeepeningGraphSearch:\t" + search.IterativeDeepeningGraphSearch());
          
         writer.close();
 	}
