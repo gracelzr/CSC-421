@@ -221,25 +221,29 @@ public class ProblemJugs extends Problem {
 		Search search  = new Search(problem);
 		
         BufferedWriter writer = new BufferedWriter(new FileWriter("Q4_Output.txt"));
+        writer.write("GreedyBestFirst------------------------");
+        writer.write("\nGreedyBestFirstTreeSearch:\t" + search.GreedyBestFirstTreeSearch());
+        writer.write("\nGreedyBestFirstGraphSearch:\t" + search.GreedyBestFirstGraphSearch());
 
-		writer.write("TreeSearch------------------------");
-		writer.write("\nBreadthFirstTreeSearch:\t\t" + search.BreadthFirstTreeSearch());
-		writer.write("\nUniformCostTreeSearch:\t\t" + search.UniformCostTreeSearch());
-		writer.write("\nDepthFirstTreeSearch:\t\t" + search.DepthFirstTreeSearch());
-		writer.write("\nGreedyBestFirstTreeSearch:\t" + search.GreedyBestFirstTreeSearch());
-		writer.write("\nAstarTreeSearch:\t\t" + search.AstarTreeSearch());
-		
-		writer.write("\n\nGraphSearch----------------------");
-		writer.write("\nBreadthFirstGraphSearch:\t" + search.BreadthFirstGraphSearch());
-		writer.write("\nUniformCostGraphSearch:\t\t" + search.UniformCostGraphSearch());
-		writer.write("\nDepthFirstGraphSearch:\t\t" + search.DepthFirstGraphSearch());
-		writer.write("\nGreedyBestGraphSearch:\t\t" + search.GreedyBestFirstGraphSearch());
-		writer.write("\nAstarGraphSearch:\t\t" + search.AstarGraphSearch());
-		
-		writer.write("\n\nIterativeDeepening----------------------");
-		writer.write("\nIterativeDeepeningTreeSearch:\t" + search.IterativeDeepeningTreeSearch());
-		writer.write("\nIterativeDeepeningGraphSearch:\t" + search.IterativeDeepeningGraphSearch());
-         
+        writer.write("Astar------------------------");
+        writer.write("\nAstarTreeSearch:\t" + search.AstarTreeSearch());
+        writer.write("\nAstarGraphSearch:\t" + search.AstarGraphSearch());
+
+        writer.write("BreadthFirst------------------------");
+        writer.write("\nBreadthFirstTreeSearch:\t\t" + search.BreadthFirstTreeSearch());
+        writer.write("\nBreadthFirstGraphSearch:\t" + search.BreadthFirstGraphSearch());
+        
+        writer.write("DepthFirst------------------------");
+        writer.write("\nDepthFirstTreeSearch:\t" + search.DepthFirstTreeSearch());
+        writer.write("\nDepthFirstGraphSearch:\t" + search.DepthFirstGraphSearch());
+        
+        writer.write("UniformCost------------------------");
+        writer.write("\nUniformCostTreeSearch:\t" + search.UniformCostTreeSearch());
+        writer.write("\nUniformCostGraphSearch:\t" + search.UniformCostGraphSearch());
+
+        writer.write("\n\nIterativeDeepening----------------------");
+        writer.write("\nIterativeDeepeningTreeSearch:\t" + search.IterativeDeepeningTreeSearch());
+        writer.write("\nIterativeDeepeningGraphSearch:\t" + search.IterativeDeepeningGraphSearch());
         writer.close();
 	}
 	

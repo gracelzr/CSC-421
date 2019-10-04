@@ -26,39 +26,14 @@ public class ProblemMCRiver extends Problem {
     // From left of the river to right of the river
     // Right : 3 cannibals, 3 missionaries, 1 boat
 	boolean goal_test(Object state) {
-        StateMCRiver MCRiver_state = (StateMCRiver) state;
+        StateMCRiver mcr_state = (StateMCRiver) state;
         
-		if(MCRiver_state.totalPeopleArray[cannR] != 3 || MCRiver_state.totalPeopleArray[missR] != 3 || MCRiver_state.totalPeopleArray[boatR] != 1)
+		if(mcr_state.totalPeopleArray[cannR] != 3 || mcr_state.totalPeopleArray[missR] != 3 || mcr_state.totalPeopleArray[boatR] != 1)
 			return false;
         
         return true;
 	}
 
-    private boolean isVaild(StateMCRiver state){
-        // check negative
-        for(int i=0; i<6; i++){
-            if(state.totalPeopleArray[i] < 0)
-                return false;
-        }
-        // check total cann# > 3, miss# > 3, boat# > 1
-        if(state.totalPeopleArray[cannL] + state.totalPeopleArray[cannR] > 3 
-            || state.totalPeopleArray[missL] + state.totalPeopleArray[missR] > 3
-            || state.totalPeopleArray[boatL] + state.totalPeopleArray[boatR] > 1)
-            return false;
-
-        // check one side cann# > 3, miss# > 3, boat# > 1
-        if(state.totalPeopleArray[cannL] > 3 || state.totalPeopleArray[missL] > 3 || state.totalPeopleArray[boatL] > 1
-            || state.totalPeopleArray[cannR] > 3 || state.totalPeopleArray[missR] > 3 || state.totalPeopleArray[boatR] > 1)
-            return false;
-
-        // check cann# > miss#
-        if(state.totalPeopleArray[cannL] > state.totalPeopleArray[missL] && state.totalPeopleArray[missL] != 0
-            || state.totalPeopleArray[cannR] > state.totalPeopleArray[missR] && state.totalPeopleArray[missR] != 0)
-            return false;
-
-        return true;
-
-    }
   
     Set<Object> getSuccessors(Object state) {
     	
@@ -173,12 +148,39 @@ public class ProblemMCRiver extends Problem {
         return set;
     }
 	
+
+    private boolean isVaild(StateMCRiver state){
+        // check negative
+        for(int i=0; i<6; i++){
+            if(state.totalPeopleArray[i] < 0)
+                return false;
+        }
+        // check total cann# > 3, miss# > 3, boat# > 1
+        if(state.totalPeopleArray[cannL] + state.totalPeopleArray[cannR] > 3 
+            || state.totalPeopleArray[missL] + state.totalPeopleArray[missR] > 3
+            || state.totalPeopleArray[boatL] + state.totalPeopleArray[boatR] > 1)
+            return false;
+
+        // check one side cann# > 3, miss# > 3, boat# > 1
+        if(state.totalPeopleArray[cannL] > 3 || state.totalPeopleArray[missL] > 3 || state.totalPeopleArray[boatL] > 1
+            || state.totalPeopleArray[cannR] > 3 || state.totalPeopleArray[missR] > 3 || state.totalPeopleArray[boatR] > 1)
+            return false;
+
+        // check cann# > miss#
+        if(state.totalPeopleArray[cannL] > state.totalPeopleArray[missL] && state.totalPeopleArray[missL] != 0
+            || state.totalPeopleArray[cannR] > state.totalPeopleArray[missR] && state.totalPeopleArray[missR] != 0)
+            return false;
+
+        return true;
+
+    }
+
 	double step_cost(Object fromState, Object toState) { return 1; }
 
     // No heuristic function for now
 	public double h(Object state) {
         StateMCRiver st = (StateMCRiver) state;
-        return st.totalPeopleArray[cannL] + st.totalPeopleArray[missL] - 1;
+        return 2*(st.totalPeopleArray[cannL] + st.totalPeopleArray[missL]) - 3;
     }
 
 
@@ -188,27 +190,31 @@ public class ProblemMCRiver extends Problem {
 		problem.initialState = new StateMCRiver(totalPeopleArray); 
 		
 		Search search  = new Search(problem);
-		
-		BufferedWriter writer = new BufferedWriter(new FileWriter("Q2_Output.txt"));
-
-        writer.write("TreeSearch------------------------");
-        writer.write("\nBreadthFirstTreeSearch:\t\t" + search.BreadthFirstTreeSearch());
-        writer.write("\nUniformCostTreeSearch:\t\t" + search.UniformCostTreeSearch());
-        writer.write("\nDepthFirstTreeSearch:\t\t" + search.DepthFirstTreeSearch());
+        
+        BufferedWriter writer = new BufferedWriter(new FileWriter("Q2_Output.txt"));
+        writer.write("GreedyBestFirst------------------------");
         writer.write("\nGreedyBestFirstTreeSearch:\t" + search.GreedyBestFirstTreeSearch());
-        writer.write("\nAstarTreeSearch:\t\t" + search.AstarTreeSearch());
-        
-        writer.write("\n\nGraphSearch----------------------");
+        writer.write("\nGreedyBestFirstGraphSearch:\t" + search.GreedyBestFirstGraphSearch());
+
+        writer.write("Astar------------------------");
+        writer.write("\nAstarTreeSearch:\t" + search.AstarTreeSearch());
+        writer.write("\nAstarGraphSearch:\t" + search.AstarGraphSearch());
+
+        writer.write("BreadthFirst------------------------");
+        writer.write("\nBreadthFirstTreeSearch:\t\t" + search.BreadthFirstTreeSearch());
         writer.write("\nBreadthFirstGraphSearch:\t" + search.BreadthFirstGraphSearch());
-        writer.write("\nUniformCostGraphSearch:\t\t" + search.UniformCostGraphSearch());
-        writer.write("\nDepthFirstGraphSearch:\t\t" + search.DepthFirstGraphSearch());
-        writer.write("\nGreedyBestGraphSearch:\t\t" + search.GreedyBestFirstGraphSearch());
-        writer.write("\nAstarGraphSearch:\t\t" + search.AstarGraphSearch());
         
+        writer.write("DepthFirst------------------------");
+        writer.write("\nDepthFirstTreeSearch:\t" + search.DepthFirstTreeSearch());
+        writer.write("\nDepthFirstGraphSearch:\t" + search.DepthFirstGraphSearch());
+        
+        writer.write("UniformCost------------------------");
+        writer.write("\nUniformCostTreeSearch:\t" + search.UniformCostTreeSearch());
+        writer.write("\nUniformCostGraphSearch:\t" + search.UniformCostGraphSearch());
+
         writer.write("\n\nIterativeDeepening----------------------");
         writer.write("\nIterativeDeepeningTreeSearch:\t" + search.IterativeDeepeningTreeSearch());
         writer.write("\nIterativeDeepeningGraphSearch:\t" + search.IterativeDeepeningGraphSearch());
-         
         writer.close();
 	}
 	
