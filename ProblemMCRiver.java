@@ -177,7 +177,6 @@ public class ProblemMCRiver extends Problem {
 
 	double step_cost(Object fromState, Object toState) { return 1; }
 
-    // No heuristic function for now
 	public double h(Object state) {
         StateMCRiver st = (StateMCRiver) state;
         return 2*(st.totalPeopleArray[cannL] + st.totalPeopleArray[missL]) - 3;
@@ -191,24 +190,24 @@ public class ProblemMCRiver extends Problem {
 		
 		Search search  = new Search(problem);
         
-        BufferedWriter writer = new BufferedWriter(new FileWriter("Q2_Output.txt"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter("Q3_Output_Heuristic.txt"));
         writer.write("GreedyBestFirst------------------------");
         writer.write("\nGreedyBestFirstTreeSearch:\t" + search.GreedyBestFirstTreeSearch());
         writer.write("\nGreedyBestFirstGraphSearch:\t" + search.GreedyBestFirstGraphSearch());
 
-        writer.write("Astar------------------------");
+        writer.write("\n\nAstar------------------------");
         writer.write("\nAstarTreeSearch:\t" + search.AstarTreeSearch());
         writer.write("\nAstarGraphSearch:\t" + search.AstarGraphSearch());
 
-        writer.write("BreadthFirst------------------------");
+        writer.write("\n\nBreadthFirst------------------------");
         writer.write("\nBreadthFirstTreeSearch:\t\t" + search.BreadthFirstTreeSearch());
         writer.write("\nBreadthFirstGraphSearch:\t" + search.BreadthFirstGraphSearch());
         
-        writer.write("DepthFirst------------------------");
+        writer.write("\n\nDepthFirst------------------------");
         writer.write("\nDepthFirstTreeSearch:\t" + search.DepthFirstTreeSearch());
         writer.write("\nDepthFirstGraphSearch:\t" + search.DepthFirstGraphSearch());
         
-        writer.write("UniformCost------------------------");
+        writer.write("\n\nUniformCost------------------------");
         writer.write("\nUniformCostTreeSearch:\t" + search.UniformCostTreeSearch());
         writer.write("\nUniformCostGraphSearch:\t" + search.UniformCostGraphSearch());
 

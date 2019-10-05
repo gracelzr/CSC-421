@@ -78,27 +78,30 @@ public class Search {
 	
 	//For statistics purposes
 	int cnt; //count expansions
-	List<Node> node_list; //store all nodes ever generated
+	ArrayList<Node> node_list; //store all nodes ever generated
 	Node initialNode; //initial node based on initial state
-	public void printTree(Node root) {
-		Node curr = root;
-		double h = problem.h(curr.state);
-		double g = curr.path_cost;
-		double f = h + g;
-		System.out.println('\n');
-		for (int i = 0; i < root.depth; i++) {
-			System.out.print('\t');
-		}
+	private void PrintTree(ArrayList<Node> search_tree)
+    {
+        System.out.println("");
+        for (Node node : search_tree)
+        {
+            for (int i = 0; i < node.depth; i++)
+            {
+                System.out.print("\t");
+            }
+            double g = node.path_cost;
+            double h = problem.h(node.state);
+            if (node.order < 0)
+            {
+                System.out.print(node.state + "(g=" + g + ", h=" + h + ", f=" + (g + h) + ")\n");
+            }
+            else
+            {
+                System.out.print(node.state + "(g=" + g + ", h=" + h + ", f=" + (g + h) + ") order=" + node.order + "\n");
+            }
 
-		System.out.print(curr.state + "(g=" + g + ", h=" + h + ", f=" + f + ")");
-		System.out.print("order=" + curr.depth);
-
-		for (Node n : node_list) {
-			if (n.parent_node == root)
-				printTree(n);
-		}
-
-	}
+        }
+    }
 	
 	private String TreeSearch(Frontier frontier) {
 		cnt = 0; 
@@ -115,9 +118,10 @@ public class Search {
 			
 			Node node = frontier.remove();
 			
-			if( problem.goal_test(node.state) )
+			if( problem.goal_test(node.state) ){
+				//PrintTree(node_list);
 				return Solution(node);
-			
+			}				
 			frontier.insertAll(Expand(node,problem));
 			cnt++;
 		}
@@ -126,7 +130,7 @@ public class Search {
 	private String GraphSearch(Frontier frontier) {
 		cnt = 0; 
 		node_list = new ArrayList<Node>();
-		
+
 		initialNode = MakeNode(problem.initialState); 
 		node_list.add( initialNode );
 		
@@ -139,10 +143,11 @@ public class Search {
 			
 			Node node = frontier.remove();
 			
-			if( problem.goal_test(node.state) )
+			if( problem.goal_test(node.state) ){
+				//PrintTree(node_list);
 				return Solution(node);
-			
-			if( !explored.contains(node.state) ) {
+			}
+			if( !explored.contains(node.state)) {
 				explored.add(node.state);
 				frontier.insertAll(Expand(node,problem));
 				cnt++;
@@ -232,6 +237,7 @@ public class Search {
 		return successors;
 	}
 	
+
 	//Create a string to print solution. 
 	private String Solution(Node node) {
 		
