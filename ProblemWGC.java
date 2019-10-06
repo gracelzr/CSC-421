@@ -159,9 +159,10 @@ public class ProblemWGC extends Problem {
 
 	double step_cost(Object fromState, Object toState) { return 1; }
 
+    /* Heuristic Function 2n-1*/
 	public double h(Object state) {
         StateWGC st = (StateWGC) state;
-        return 2*(st.wgcArray[wolfL] + st.wgcArray[goatL] + st.wgcArray[cabbL]) - 5;
+        return 2*(st.wgcArray[wolfL] + st.wgcArray[goatL] + st.wgcArray[cabbL]) - 1;
     }
 
 

@@ -1,5 +1,5 @@
 /* 
-    Assignment 1 Question3
+    Assignment 1 Question 3
     Three missionaries and three cannibals cross a river
     This file contains the problem states and goals
 */
@@ -177,6 +177,7 @@ public class ProblemMCRiver extends Problem {
 
 	double step_cost(Object fromState, Object toState) { return 1; }
 
+    /* Heuristic Function 2(n-2)+1*/
 	public double h(Object state) {
         StateMCRiver st = (StateMCRiver) state;
         return 2*(st.totalPeopleArray[cannL] + st.totalPeopleArray[missL]) - 3;

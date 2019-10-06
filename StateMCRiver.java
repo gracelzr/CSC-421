@@ -1,5 +1,5 @@
 /* 
-    Assignment 1 Question3
+    Assignment 1 Question 3
     Three missionaries and three cannibals cross a river
     This file contains the state of the problem
 */
